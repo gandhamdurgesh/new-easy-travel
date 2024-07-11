@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Route Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        #map {
+            height: 300px;
+            width: 500px;
+            margin: 50px auto;
+            
+        }
+    </style>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+</head>
+<body>
+    <div class="controls">
+        <br>
+        <input id="from" type="text" placeholder="From Location">
+        <input id="to" type="text" placeholder="To Location">
+        <div id="subdiv3">
+            <div id="Raviicon3">
+                <br>
+                <i class="bi bi-calendar-check"></i>
+            </div>
+            <input type="date">
+        </div>
+        <br>
+        <button onclick="calculateRoute()">Get Route</button>
+        <br><br>
+        <button id="book-ride-button" onclick="bookRide()" style="display: none;">Book a Ride</button>
+    </div>
+    <div id="map"></div>
+    <div id="vehicle-options" style="display: none; margin-top: 20px;">
+        <h2>Available Vehicles</h2>
+        <p id="route-info"></p>
+        <ul id="vehicle-list" class="list-group"></ul>
+    </div>
+
+    <script>
+        let map = L.map('map').setView([20.5937, 78.9629], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let control = L.Routing.control({
+            waypoints: [],
+            geocoder: L.Control.Geocoder.nominatim(),
+            routeWhileDragging: true
+        }).addTo(map);
+
+        control.on('routesfound', function(e) {
+            let distance = e.routes[0].summary.totalDistance / 1000; // distance in kilometers
+
+            let vehicleList = document.getElementById('vehicle-list');
+            vehicleList.innerHTML = ''; // Clear existing list
+
+            if (distance > 40) {
+                let carOption = document.createElement('li');
+                carOption.className = 'list-group-item';
+                carOption.textContent = 'Car';
+                vehicleList.appendChild(carOption);
+
+                let busOption = document.createElement('li');
+                busOption.className = 'list-group-item';
+                busOption.textContent = 'Bus';
+                vehicleList.appendChild(busOption);
+            } else {
+                let autoOption = document.createElement('li');
+                autoOption.className = 'list-group-item';
+                autoOption.textContent = 'Auto';
+                vehicleList.appendChild(autoOption);
+
+                let bikeOption = document.createElement('li');
+                bikeOption.className = 'list-group-item';
+                bikeOption.textContent = 'Bike';
+                vehicleList.appendChild(bikeOption);
+
+                let carOption = document.createElement('li');
+                carOption.className = 'list-group-item';
+                carOption.textContent = 'Car';
+                vehicleList.appendChild(carOption);
+            }
+        });
+
+        function calculateRoute() {
+            let from = document.getElementById('from').value;
+            let to = document.getElementById('to').value;
+
+            L.Control.Geocoder.nominatim().geocode(from, function(fromResults) {
+                if (fromResults.length > 0) {
+                    let fromLatLng = fromResults[0].center;
+
+                    L.Control.Geocoder.nominatim().geocode(to, function(toResults) {
+                        if (toResults.length > 0) {
+                            let toLatLng = toResults[0].center;
+
+                            control.setWaypoints([
+                                L.latLng(fromLatLng),
+                                L.latLng(toLatLng)
+                            ]);
+
+                            // Show the Book a Ride button
+                            document.getElementById('book-ride-button').style.display = 'block';
+                        } else {
+                            alert('Destination not found: ' + to);
+                        }
+                    });
+                } else {
+                    alert('Starting location not found: ' + from);
+                }
+            });
+        }
+
+        function bookRide() {
+            let from = document.getElementById('from').value;
+            let to = document.getElementById('to').value;
+
+            document.getElementById('route-info').innerText = `From: ${from} To: ${to}`;
+            document.getElementById('vehicle-options').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

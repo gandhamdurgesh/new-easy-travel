@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Mode</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#payment-form {
+    background: #fff;
+    padding: 20px;
+    margin: 50px 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#payment-form h2 {
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-group input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.payment-section {
+    margin-top: 20px;
+}
+
+.form-group button {
+    background: #0070ba;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background: #005b99;
+}
+
+#status {
+    margin-top: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Payment Mode</title>
+    </head>
+    <body>
+    
+    <div class="container">
+        <div id="payment-form">
+            <h2>Select Payment Mode</h2>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="payment-mode" value="credit-card" required> Credit/Debit Card
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-mode" value="upi" required> UPI
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-mode" value="paypal" required> PayPal
+                    </label>
+                </div>
+                
+                <div id="card-details" class="form-group payment-section" style="display: none;">
+                    <div class="form-group">
+                        <label for="card-number">Card Number:</label>
+                        <input type="text" id="card-number" name="card-number" pattern="\d{16}" maxlength="16" placeholder="Enter your card number">
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry-date">Expiry Date:</label>
+                        <input type="month" id="expiry-date" name="expiry-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" name="cvv" pattern="\d{3}" maxlength="3" placeholder="Enter CVV">
+                    </div>
+                </div>
+    
+                <div id="upi-details" class="form-group payment-section" style="display: none;">
+                    <label for="upi-id">UPI ID:</label>
+                    <input type="text" id="upi-id" name="upi-id" placeholder="Enter your UPI ID">
+                </div>
+    
+                <div id="paypal-details" class="form-group payment-section" style="display: none;">
+                    <p>You will be redirected to PayPal to complete your payment securely.</p>
+                </div>
+    
+                <div class="form-group">
+                    <button type="submit">Make Payment</button>
+                </div>
+            </form>
+            <div id="status"></div>
+        </div>
+    </div>
+    
+    </body>
+    </html>
+    
+
+<script> 
+    const paymentModeRadios = document.getElementsByName('payment-mode');
+
+paymentModeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        const paymentMode = this.value;
+        const cardDetails = document.getElementById('card-details');
+        const upiDetails = document.getElementById('upi-details');
+        const paypalDetails = document.getElementById('paypal-details');
+        
+        cardDetails.style.display = 'none';
+        upiDetails.style.display = 'none';
+        paypalDetails.style.display = 'none';
+
+        if (paymentMode === 'credit-card') {
+            cardDetails.style.display = 'block';
+        } else if (paymentMode === 'upi') {
+            upiDetails.style.display = 'block';
+        } else if (paymentMode === 'paypal') {
+            paypalDetails.style.display = 'block';
+        }
+    });
+});
+
+document.getElementById('paymentForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Collect form data
+    const paymentMode = document.querySelector('input[name="payment-mode"]:checked').value;
+    const cardNumber = document.getElementById('card-number').value;
+    const expiryDate = document.getElementById('expiry-date').value;
+    const cvv = document.getElementById('cvv').value;
+    const upiId = document.getElementById('upi-id').value;
+
+    // Basic form validation
+    if (!paymentMode) {
+        document.getElementById('status').innerText = 'Please select a payment mode.';
+        return;
+    }
+
+    if (paymentMode === 'credit-card' && (!cardNumber || !expiryDate || !cvv)) {
+        document.getElementById('status').innerText = 'Please fill in all card details.';
+        return;
+    }
+
+    if (paymentMode === 'upi' && !upiId) {
+        document.getElementById('status').innerText = 'Please enter your UPI ID.';
+        return;
+    }
+
+    // Simulate form submission (you would normally send this data to your server)
+    setTimeout(() => {
+        if (paymentMode === 'paypal') {
+            window.location.href = 'https://www.paypal.com/signin'; // Redirect to PayPal
+        } else {
+            document.getElementById('status').innerText = 'Payment successful!';
+            document.getElementById('paymentForm').reset();
+            document.querySelectorAll('.payment-section').forEach(section => {
+                section.style.display = 'none';
+            });
+        }
+    }, 500);
+});
+
+
+</script>
+</body>
+</html>

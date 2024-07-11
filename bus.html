@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easy Travel Booking</title>
+   
+</head>
+<link rel="stylesheet" href="bus.css">
+<body>
+    <div class="container" id="searchPage">
+        <h1>Bus Booking</h1>
+        <form id="searchForm">
+            <label for="from">From: </label>
+            <input type="text" id="from" name="from" required>
+
+            <label for="to">To:</label>
+            <input type="text" id="to" name="to" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="s-container" id="resultsPage" style="display:none;">
+        <h1>Available Buses</h1>
+        <div id="busList">
+            <!-- Bus list will be populated here -->
+        </div>
+    </div>
+    <div class="bus-container" id="seatSelectionPage" style="display:none;">
+        <h1>Select Your Seat</h1>
+        <div class="seat-container">
+            <div class="seat-section" id="leftSide">
+                <h3>Left Side</h3>
+                <!-- Left side seats will be populated here -->
+            </div>
+            <div class="seat-section" id="rightSide">
+                <h3>Right Side</h3>
+                <!-- Right side seats will be populated here -->
+            </div>
+        </div>
+        <div id="totalPriceDisplay" style="margin-top: 270px;"></div>
+        <button id="confirmButton" style="display:none;"><a href="./login.html" style="text-decoration: none;">Confirm Seat </a>
+        </button>
+    </div>
+    
+    
+    <script>
+        // Define seat cost
+        const seatCost = 550; // Cost per seat in rupees
+    
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const date = document.getElementById('date').value;
+    
+            // Hide search page and show results page
+            document.getElementById('searchPage').style.display = 'none';
+            document.getElementById('resultsPage').style.display = 'block';
+    
+            // Mock list of buses
+            const buses = [
+               { id: 1, name: 'orange Bus', time: '10:00 AM' },
+                { id: 2, name: ' red Bus ', time: '12:00 PM' },
+                { id: 3, name: ' green Bus', time: '2:00 PM' },
+            ];
+    
+            const busList = document.getElementById('busList');
+            busList.innerHTML = '';
+            buses.forEach(bus => {
+                const busItem = document.createElement('div');
+                busItem.className = 'bus-item';
+                busItem.innerHTML = `
+                    <h2>${bus.name}</h2>
+                    <p>Departure Time: ${bus.time}</p>
+                    <button onclick="selectBus(${bus.id})">Select</button>
+                `;
+                busList.appendChild(busItem);
+            });
+        });
+    
+        function selectBus(busId) {
+            // Hide results page and show seat selection page
+            document.getElementById('resultsPage').style.display = 'none';
+            document.getElementById('seatSelectionPage').style.display = 'block';
+    
+            // Clear previous seat selections and total price display
+            document.querySelectorAll('.seat').forEach(s => {
+                s.classList.remove('selected', 'unavailable'); // Remove selected and unavailable classes
+                s.classList.add('available'); // Add available class
+            });
+            document.getElementById('totalPriceDisplay').innerHTML = '';
+    
+            // Mock seat map divided into sections
+            const sections = ['leftSide', 'rightSide'];
+    
+            // Generate seats for left and right sections
+            sections.forEach(section => {
+                const maxRows = 2;  // 2 rows for each section
+                const maxSeatsPerRow = 10; // 10 seats per row
+    
+                for (let row = 1; row <= maxRows; row++) {
+                    for (let seatNum = 1; seatNum <= maxSeatsPerRow; seatNum++) {
+                        const seat = {
+                            number: seatNum + (row - 1) * maxSeatsPerRow,
+                            available: true,
+                            section: section,
+                            busId: busId
+                        };
+    
+                        const seatMap = document.getElementById(section);
+                        const seatDiv = document.createElement('div');
+                        seatDiv.className = seat.available ? 'seat available' : 'seat unavailable';
+                        seatDiv.innerHTML = seat.number;
+                        seatDiv.addEventListener('click', () => {
+                            if (seat.available) {
+                                // Toggle seat selection
+                                seatDiv.classList.toggle('selected');
+                                document.getElementById('confirmButton').style.display = 'block';
+                                updateTotalPrice(); // Update total price on seat selection
+                            }
+                        });
+                        seatMap.appendChild(seatDiv);
+                    }
+                }
+            });
+    
+            // Update total price display based on selected seats
+            function updateTotalPrice() {
+                const selectedSeats = document.querySelectorAll('.seat.selected').length;
+                const totalPrice = selectedSeats * seatCost;
+                document.getElementById('totalPriceDisplay').innerHTML = `Total Price: ${totalPrice} rupees`;
+            }
+    
+            // Confirm button click event listener
+            document.getElementById('confirmButton').addEventListener('click', () => {
+                const selectedSeats = document.querySelectorAll('.seat.selected').length;
+                const totalPrice = selectedSeats * seatCost;
+                alert(`Selected ${selectedSeats} seats for Bus ID: ${busId}. Total Price: ${totalPrice} rupees.`);
+                // Navigate to confirmation or payment page
+            });
+        }
+    </script>
+    
+    
+    
+</body>
+</html>

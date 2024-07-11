@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+</head>
+<link rel="stylesheet" href="login_page.css">
+
+<body>
+
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" required>
+
+                <button type="submit">Login</button>
+                <button> <span class="button"><a href="signup.html" class="new">Register</a></span></button>
+                <br></br>
+               
+                <span class="psw"> <a href="forget1.html">forget password</a></span>
+
+        </form>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit',function(event) {
+            event.preventDefault();
+            const emailOrPhone = document.getElementById('emailOrPhone').value;
+            const password = document.getElementById('password').value;
+            const formData = {
+                emailOrPhone: emailOrPhone,
+                password: password
+            };
+            const jsonData = JSON.stringify(formData);
+
+            fetch('http://localhost:9090/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                if (data.status === true) {
+                    alert('Login successful!');
+                    window.location.href = 'homepage2.html';
+                } else {
+                    alert('Invalid credentials. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed!');
+            });
+        });
+    </script>
+</body>
+
+
+
+</html>
+

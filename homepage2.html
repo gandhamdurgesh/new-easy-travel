@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyTravel</title>
+    <link rel="stylesheet" href="homepage2.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div id="navbar">
+<!-- -----------------------------------------------------------------------------------------------------   -->
+            <div id="Ravisubdiv1">
+                     <div>
+                      <img src="data:image/png;base64,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" height="50px" width="100px">
+                     </div>
+
+                   <div>
+                     <a href=""><big>E</big><b>asy</b><big>T</big><b>ravel</b></a>
+                   </div>
+                   <br>
+           </div>
+<!-- ----------------------------------------------------------------------------------------------------- -->
+            <div id="Ravisubdiv2">
+             <div>
+                <i class="bi bi-bus-front"></i>
+             </div>
+             <div>
+                <!-- <a href=""><big>Bus</big></a> -->
+                <li><a href="bus.html" class="<big>anchor1</big>">Bus</a></li>
+             </div>
+           </div>
+<!-- ----------------------------------------------------------------------------------------------------- -->
+      
+       <div id="Ravisubdiv3">
+         
+          <div>
+            <i class="bi bi-car-front"></i>
+          </div>
+          <div>
+            <a href=""><big>Car</big></a>
+          </div>
+
+      </div>
+<!-- ----------------------------------------------------------------------------------------------------  -->
+     <div  id="Ravisubdiv4">
+        <div>
+          <i class="bi bi-bicycle"></i>
+        </div>
+        <div>
+           <a href=""><big>Bike</big></a> 
+        </div>
+    </div>  
+  
+      <div id="Ravisubdiv5">
+            <div>
+                <img src="https://cdn4.iconfinder.com/data/icons/transportation-390/512/Auto_Rickshaw-1024.png" alt="" id="Ravisvg">
+            </div>
+            <div>
+               <a href=""><big>Auto</big></a>
+            </div>
+     </div> 
+     <div>
+     
+      <a href="./login.html">Login </a>
+     </div>
+
+
+    </div>
+  
+ <!-- -------------------------------------- completed Nav bar ----------------------------------------- -->
+
+<div class="Banner-card">
+  <img src="https://static.vecteezy.com/system/resources/previews/021/609/109/large_2x/happy-family-with-car-travel-road-trip-summer-vacation-in-car-in-the-sunset-dad-mom-and-daughter-happy-traveling-enjoy-together-driving-in-holidays-people-lifestyle-ride-by-automobile-photo.jpg" alt="" id="img2">
+  <div class="Banner-text">
+  <h2>
+    <big>Welcome To Easy Travels</big>
+  </h2>
+</div>
+</div>
+
+<!--------------------------------------maps code----------------------------------------->
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+<div class="map-container">
+  <div id="map"></div>
+  <div class="controls">
+    <br>
+    <br>
+      <div class="control-group">
+          <input id="from" type="text" placeholder="From Location" >
+          <!-- <div id="fromSuggestions" class="suggestions"></div> -->
+          
+      </div>
+      <div class="control-group">
+          <input id="to" type="text" placeholder="To Location">
+          <!-- <div id="toSuggestions" class="suggestions"></div> -->
+      </div>
+      <div class="control-group">
+          <button onclick="calculateRoute()" id="button5">Search</button>
+      </div>
+  </div>
+</div>
+ <div id="output"></div>
+    <div class="transport-options" id="transport-options"></div>
+
+
+
+<!------------------------------------Hyderabad pic  ------------------------------------------------>
+
+<br>
+<br>
+<h2 style="text-align: center;color:black;">Hyderabad Popular places</h2>
+<br>
+<div id="Ravipics1">
+    <div>
+      <img src="https://hyderabadtourpackage.in/images/places-to-visit/charminar-hyderabad-entryfee-timings-tour-package-header.jpg " alt="" class="Raviimg1">
+      <h2 style="text-align: center;color: rgba(200, 138, 96, 0.692);">Charminar</h2>
+    </div>
+    <div>
+      <img src="https://hyderabadtourpackage.in/images/places-to-visit/golconda-fort-hyderabad-entryfee-timings-tour-package-header.jpg " alt="" class="Raviimg1">
+      <h2 style="text-align: center;color: rgba(200, 138, 96, 0.692);">Golconda-fort</h2>
+    </div>
+    <div>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSCDTfnnj-kt2142hgrZC-CNyuUW_xPazmxw&s" alt="" class="Raviimg1">
+      <h2 style="text-align: center;color: rgba(200, 138, 96, 0.692);">Tankband</h2>
+    </div>
+</div><br>
+<!----------------------------------------- Hyderabad places complted ------------------------->
+
+<h2 style="text-align: center;color:black;">Bangalore Popular places</h2>
+<br>
+
+<div id="Ravipics2">
+  <div>
+    <img src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0b/27/ac/3a.jpg" alt="" class="Raviimg2">
+    <h2 style="text-align: center;color: violet;">Bangalore-palace</h2>
+  </div>
+  <div>
+    <img src="https://hyderabadtourpackage.in/images/places-to-visit/golconda-fort-hyderabad-entryfee-timings-tour-package-header.jpg " alt="" class="Raviimg2">
+    <h2 style="text-align: center; color: violet;">Nandi-hills</h2>
+  </div>
+  <div>
+    <img src="data:image/jpeg;base64,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
+" alt="" class="Raviimg2">
+    <h2 style="text-align: center;color: violet;">Adiyogi</h2>
+  </div>
+</div>
+<br>
+<!------------------------------------------- chennai places -->
+<h2 style="text-align: center;color:black;">Chennai Popular places</h2>
+<br>
+<div id="Ravipics3">
+    <div>
+      <img src="https://www.fabhotels.com/blog/wp-content/uploads/2023/01/Marina-Beach-min.jpg " alt="" class="Raviimg3">
+      <h2 style="color: skyblue; text-align: center;">Marina Beach</h2>
+    </div>
+    <div>
+    <img src="https://chennaitourism.travel/images/partner-tours/up-tours-1-day-chennai-local-sightseeing-tour-by-cab.jpg " alt="" class="Raviimg3">
+    <h2 style="color: skyblue;text-align: center;" >Local-sightseeing</h2>
+  </div>
+  <div>
+  <img src="https://www.tamilnadutourism.tn.gov.in/img/pages/medium-desktop/kapaleeshwarar-temple-1656078500_97b56461f9ad05d3b236.jpg " alt="" class="Raviimg3" >
+  <h2 style="color: skyblue; text-align: center;">kapaleeshwarar</h2>
+</div>
+</div>
+
+<br> <br>
+
+<!--------------------------- footer page start ----------------------------------------->
+<div id="Ravifooter">
+   <div id="sub-Ravifooter">
+     <!-- <div>
+      <h4 style="text-align: center;color: black;">Quick link</h4>
+      <br> <br>
+      <ul class="ul2">
+        <li><a href="" class="anchor1">About us</a></li>
+        <li><a href="" class="anchor1">Terms & condtion</a></li>
+        <li><a href="" class="anchor1">privacy policy</a></li>
+        <li><a href="" class="anchor1">About us</a></li>
+      </ul>
+     </div> -->
+     <div>
+      <h4 style="text-align: center;color: black;">Support</h4>
+      <br>
+      <ul class="ul2">
+        <li><a href="./contactus.html" class="anchor1">Contact us</a></li>
+        <li><a href="./aboutus.html" class="anchor1">About us</a></li>
+        <li><a href="./termsandcondition.html" class="anchor1">Terms & condtion</a></li>
+        <li><a href="" class="anchor1">privacy policy</a></li>
+        <!-- <li><a href="" class="anchor1">Tour</a></li> -->
+      </ul>
+     </div>
+     
+     <div>
+      <h4 style="text-align: center;color: black;">Contact Info</h4>
+      <br>
+      <ul class="ul2">
+        <li><a href="" class="anchor1">Easy Travels</a></li>
+        <li><a href="" class="anchor1">+040 52367272872</a></li>
+        <li><a href="" class="anchor1">EasyTravel51@gmail.com</a></li>
+        <li><a href="" class="anchor1">+91 9864367863</a></li>
+      </ul>
+     </div>
+
+    </div>
+
+    
+    <div id="Ravi-icons">
+          <div >
+          <a href="https://www.facebook.com/groups/745026439393237" class="anchor2"><i class="bi bi-facebook" ></i></a>
+        </div>
+
+        <div>
+          <a href="" class="anchor2"><i class="bi bi-instagram"></i></a>
+        </div>
+
+        <div>
+          <a href="https://x.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJteCI6IjIifQ%3D%3D%22%7D" class="anchor2"><i class="bi bi-twitter"></i></a>
+        </div>
+        <div>
+          <a href="https://www.youtube.com/@TravelVlogzz" class="anchor2"><i class="bi bi-youtube"></i></a>
+        </div>
+        
+    </div>
+    <div id="footer1">
+      <p><a href="">EasyTravel</a></p>
+      <p>© 2024<a href=""> EasyTravel And Travels.</a> All rights reserved</p>
+      <p>powered by: <a href=""><img src="https://i.pinimg.com/736x/ee/48/e1/ee48e14c358ddf14510bf7f791c99663.jpg" alt="" id="Raviimg4"></a> </p>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <script>
+     
+     let map = L.map('map').setView([20.5937, 78.9629], 6);
+        let distance = 0;
+        let control = null;
+        let fromMarker = null;
+        let toMarker = null;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function calculateRoute() {
+            let from = document.getElementById('from').value;
+            let to = document.getElementById('to').value;
+
+            if (!to) {
+                alert("Please enter a destination");
+                return;
+            }
+
+            if (control) {
+                map.removeControl(control);
+            }
+
+            if (fromMarker) {
+                map.removeLayer(fromMarker);
+            }
+
+            if (toMarker) {
+                map.removeLayer(toMarker);
+            }
+
+            if (from) {
+                geocodeAndRoute(from, to);
+            } else {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        let currentLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+                        geocodeAndRoute(currentLocation, to);
+                    }, function() {
+                        alert("Geolocation failed. Please enter the starting location manually.");
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser. Please enter the starting location manually.");
+                }
+            }
+        }
+
+        function geocodeAndRoute(from, to) {
+            if (typeof from === "string") {
+                L.Control.Geocoder.nominatim().geocode(from, function(fromResults) {
+                    if (fromResults.length > 0) {
+                        let fromLatLng = fromResults[0].center;
+                        fromMarker = L.marker(fromLatLng).addTo(map).bindPopup('From: ' + fromResults[0].name).openPopup();
+                        setRoute(fromLatLng, to);
+                    } else {
+                        alert('Starting location not found: ' + from);
+                    }
+                });
+            } else {
+                fromMarker = L.marker(from).addTo(map).bindPopup('From: Current Location').openPopup();
+                setRoute(from, to);
+            }
+        }
+
+        function setRoute(fromLatLng, to) {
+            L.Control.Geocoder.nominatim().geocode(to, function(toResults) {
+                if (toResults.length > 0) {
+                    let toLatLng = toResults[0].center;
+                    toMarker = L.marker(toLatLng).addTo(map).bindPopup('To: ' + toResults[0].name).openPopup();
+
+                    control = L.Routing.control({
+                        waypoints: [
+                            L.latLng(fromLatLng),
+                            L.latLng(toLatLng)
+                        ],
+                        routeWhileDragging: false,
+                        show: false, // Disable turn-by-turn directions
+                        createMarker: function() { return null; },
+                        addWaypoints: false,
+                        draggableWaypoints: false
+                    }).addTo(map);
+
+                    control.on('routesfound', function(e) {
+                        distance = e.routes[0].summary.totalDistance / 1000; // distance in kilometers
+                        document.getElementById('output').innerHTML = `Distance: ${distance.toFixed(2)} km`;
+                        showPrices();
+                    });
+
+                } else {
+                    alert('Destination not found: ' + to);
+                }
+            });
+        }
+
+        function showPrices() {
+            const transportOptions = document.getElementById('transport-options');
+            transportOptions.innerHTML = '';
+
+            if (distance > 10) {
+                transportOptions.innerHTML += `
+                    <div class="transport-option" onclick="navigateToPayment('car', ${distance * 50})">
+                        <img src="https://via.placeholder.com/100x100.png?text=Car" alt="Car">
+                        <p>Car Price: ₹${(distance * 50).toFixed(2)}</p>
+                    </div>
+                    <p>Auto and Bike are not available for distances over 10 km. Please select Car.</p>
+                `;
+            } else {
+                transportOptions.innerHTML += `
+                    <div class="transport-option" onclick="navigateToPayment('auto', ${distance * 35})">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1927/1927158.png" alt="Auto">
+                        <p>Auto Price: ₹${(distance * 35).toFixed(2)}</p>
+                    </div>
+                    <div class="transport-option" onclick="navigateToPayment('bike', ${distance * 20})">
+                        <img src="https://th.bing.com/th/id/OIP.aBR5HiRntJVf0emXH0XgmQHaHa?w=1920&h=1920&rs=1&pid=ImgDetMain" alt="Bike">
+                        <p>Bike Price: ₹${(distance * 20).toFixed(2)}</p>
+                    </div>
+                    <div class="transport-option" onclick="navigateToPayment('car', ${distance * 50})">
+                        <img src="https://cdn-icons-png.flaticon.com/512/730/730308.png" alt="Car">
+                        <p>Car Price: ₹${(distance * 50).toFixed(2)}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function navigateToPayment(mode, price) {
+            const paymentPageUrl = `payment.html?mode=${mode}&price=${price.toFixed(2)}`;
+            window.location.href = paymentPageUrl;
+        }
+
+        function showSuggestions(inputElement, suggestionsId) {
+            let query = inputElement.value;
+            if (query.length < 3) {
+                document.getElementById(suggestionsId).innerHTML = '';
+                return;
+            }
+            L.Control.Geocoder.nominatim().geocode(query, function(results) {
+                let suggestions = results.map(result => `<div onclick="selectSuggestion('${inputElement.id}', '${result.name}')">${result.name}</div>`);
+                document.getElementById(suggestionsId).innerHTML = suggestions.join('');
+            });
+        }
+
+        function selectSuggestion(inputId, suggestion) {
+            document.getElementById(inputId).value = suggestion;
+            document.getElementById(inputId + 'Suggestions').innerHTML = '';
+        }
+        </script>
+
+
+
+</body>
+</html>

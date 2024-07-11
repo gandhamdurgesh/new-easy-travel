@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Finder with OpenStreetMap</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .map-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #map {
+            height: 500px;
+            width: 1100px;
+            margin-right: 0;
+        }
+
+        .controls {
+            width: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .control-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .transport-options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .transport-option {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .transport-option img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .suggestions {
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .suggestions div {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .suggestions div:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="controls">
+            <div class="control-group">
+                <input id="from" type="text" placeholder="From Location" oninput="showSuggestions(this, 'fromSuggestions')">
+                <div id="fromSuggestions" class="suggestions"></div>
+            </div>
+            <div class="control-group">
+                <input id="to" type="text" placeholder="To Location" oninput="showSuggestions(this, 'toSuggestions')">
+                <div id="toSuggestions" class="suggestions"></div>
+            </div>
+            <div class="control-group">
+                <button onclick="calculateRoute()">Get Route</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="output"></div>
+    <div class="transport-options" id="transport-options"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        let map = L.map('map').setView([20.5937, 78.9629], 6);
+        let distance = 0;
+        let control = null;
+        let fromMarker = null;
+        let toMarker = null;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function calculateRoute() {
+            let from = document.getElementById('from').value;
+            let to = document.getElementById('to').value;
+
+            if (!to) {
+                alert("Please enter a destination");
+                return;
+            }
+
+            if (control) {
+                map.removeControl(control);
+            }
+
+            if (fromMarker) {
+                map.removeLayer(fromMarker);
+            }
+
+            if (toMarker) {
+                map.removeLayer(toMarker);
+            }
+
+            if (from) {
+                geocodeAndRoute(from, to);
+            } else {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        let currentLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+                        geocodeAndRoute(currentLocation, to);
+                    }, function() {
+                        alert("Geolocation failed. Please enter the starting location manually.");
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser. Please enter the starting location manually.");
+                }
+            }
+        }
+
+        function geocodeAndRoute(from, to) {
+            if (typeof from === "string") {
+                L.Control.Geocoder.nominatim().geocode(from, function(fromResults) {
+                    if (fromResults.length > 0) {
+                        let fromLatLng = fromResults[0].center;
+                        fromMarker = L.marker(fromLatLng).addTo(map).bindPopup('From: ' + fromResults[0].name).openPopup();
+                        setRoute(fromLatLng, to);
+                    } else {
+                        alert('Starting location not found: ' + from);
+                    }
+                });
+            } else {
+                fromMarker = L.marker(from).addTo(map).bindPopup('From: Current Location').openPopup();
+                setRoute(from, to);
+            }
+        }
+
+        function setRoute(fromLatLng, to) {
+            L.Control.Geocoder.nominatim().geocode(to, function(toResults) {
+                if (toResults.length > 0) {
+                    let toLatLng = toResults[0].center;
+                    toMarker = L.marker(toLatLng).addTo(map).bindPopup('To: ' + toResults[0].name).openPopup();
+
+                    control = L.Routing.control({
+                        waypoints: [
+                            L.latLng(fromLatLng),
+                            L.latLng(toLatLng)
+                        ],
+                        routeWhileDragging: false,
+                        show: false, // Disable turn-by-turn directions
+                        createMarker: function() { return null; },
+                        addWaypoints: false,
+                        draggableWaypoints: false
+                    }).addTo(map);
+
+                    control.on('routesfound', function(e) {
+                        distance = e.routes[0].summary.totalDistance / 1000; // distance in kilometers
+                        document.getElementById('output').innerHTML = `Distance: ${distance.toFixed(2)} km`;
+                        showPrices();
+                    });
+
+                } else {
+                    alert('Destination not found: ' + to);
+                }
+            });
+        }
+
+        function showPrices() {
+            const transportOptions = document.getElementById('transport-options');
+            transportOptions.innerHTML = '';
+
+            if (distance > 10) {
+                transportOptions.innerHTML += `
+                    <div class="transport-option" onclick="navigateToPayment('car', ${distance * 50})">
+                        <img src="https://via.placeholder.com/100x100.png?text=Car" alt="Car">
+                        <p>Car Price: ₹${(distance * 50).toFixed(2)}</p>
+                    </div>
+                    <p>Auto and Bike are not available for distances over 10 km. Please select Car.</p>
+                `;
+            } else {
+                transportOptions.innerHTML += `
+                    <div class="transport-option" onclick="navigateToPayment('auto', ${distance * 35})">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1927/1927158.png" alt="Auto">
+                        <p>Auto Price: ₹${(distance * 35).toFixed(2)}</p>
+                    </div>
+                    <div class="transport-option" onclick="navigateToPayment('bike', ${distance * 20})">
+                        <img src="https://th.bing.com/th/id/OIP.aBR5HiRntJVf0emXH0XgmQHaHa?w=1920&h=1920&rs=1&pid=ImgDetMain" alt="Bike">
+                        <p>Bike Price: ₹${(distance * 20).toFixed(2)}</p>
+                    </div>
+                    <div class="transport-option" onclick="navigateToPayment('car', ${distance * 50})">
+                        <img src="https://cdn-icons-png.flaticon.com/512/730/730308.png" alt="Car">
+                        <p>Car Price: ₹${(distance * 50).toFixed(2)}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function navigateToPayment(mode, price) {
+            const paymentPageUrl = `payment.html?mode=${mode}&price=${price.toFixed(2)}`;
+            window.location.href = paymentPageUrl;
+        }
+
+        function showSuggestions(inputElement, suggestionsId) {
+            let query = inputElement.value;
+            if (query.length < 3) {
+                document.getElementById(suggestionsId).innerHTML = '';
+                return;
+            }
+            L.Control.Geocoder.nominatim().geocode(query, function(results) {
+                let suggestions = results.map(result => `<div onclick="selectSuggestion('${inputElement.id}', '${result.name}')">${result.name}</div>`);
+                document.getElementById(suggestionsId).innerHTML = suggestions.join('');
+            });
+        }
+
+        function selectSuggestion(inputId, suggestion) {
+            document.getElementById(inputId).value = suggestion;
+            document.getElementById(inputId + 'Suggestions').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

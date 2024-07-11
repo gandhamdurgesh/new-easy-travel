@@ -1,0 +1,193 @@
+#img1{
+    height: 50px;
+    width: 100px;
+}
+#subnav1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+     #map {
+            height: 500px;
+            width: 95%;
+        }
+        .controls {
+            margin-bottom: 10px;
+      }
+
+a{
+    text-decoration: none;
+}
+#navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(183, 224, 224)
+}
+.Banner-card {
+    position: relative;
+}
+.Banner-text{
+    position: absolute;
+    color: #fff;
+    padding: 10px;
+    top: 20%;
+    font-size: 20px;
+    margin-left: 33%;
+}
+#img2{
+    height: 350px;
+    width: 1280px;
+}
+#subdiv1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Raviicon1{
+    font-size: 30px;
+}
+#subdiv2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Raviicon2{
+    font-size: 30px;
+}
+#subdiv3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Raviicon3{
+    font-size: 30px;
+    
+
+}
+#subdiv4{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Raviicon4{
+    font-size: 30px;
+}
+#subdiv5{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Raviicon5{
+    font-size: 30px;
+}
+#RaviMaindiv1{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(245, 245, 245, 0.616);
+}
+
+
+#RaviMaindiv2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+    background-color: seashell;
+}
+.subcls{
+    border-radius: 20px;
+    /* border: 1px solid black; */
+    height: 170px;
+    width: 390px;
+    
+}
+#Icon1{
+    font-size: 25px;
+}
+#Icon2{
+    font-size: 25px;
+}
+#Icon3{
+    font-size: 25px;
+}
+#RaviMaindiv4{
+    height: 300px;
+    width: 1310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    background-color: dodgerblue;
+}
+#img3{
+    height: 220px;
+    width: 250px;
+}
+#Ravidiv4{
+    /* border: 1px solid black; */
+    height: 250px;
+    width: 700px;
+}
+/* #Ravidiv5{
+    border: 1px solid black;
+} */
+ #button2{
+    position: absolute;
+    height: 33px;
+    width: 200px;
+    margin-left: 150px;
+    border-radius: 8px;
+    margin-top: 30px;
+ }
+ #RaviMaindiv5{
+    height: 300px;
+    width: 1310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    background-color: whitesmoke;
+    background-image: url("https://images.pexels.com/photos/845405/pexels-photo-845405.jpeg?auto=compress&cs=tinysrgb&w=800");
+ }
+ /* #divRavi1{
+    border: 1px solid black;
+ }
+ #divRavi3{
+    border: 1px solid black;
+ } */
+ #img4{
+    height: 220px;
+    width: 250px;
+}
+#divRavi1{
+    height: 220px;
+    width: 700px;
+}
+#button3{
+    position: absolute;
+    height: 33px;
+    width: 200px;
+    margin-left: 150px;
+    border-radius: 8px;
+    margin-top: 30px;
+ }
+ #Ravimaindiv6{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1320px;
+    background-color: skyblue;
+ }
+ #divKumar1{
+    font-size: 30px
+    
+}

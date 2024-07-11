@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Garage System</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#carInput {
+    width: 200px;
+    margin-right: 10px;
+}
+
+#message {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.garage {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Parking Garage System</h1>
+    <div>
+        <input type="text" id="carInput" placeholder="Enter 'a' or 'd' followed by license plate">
+        <button onclick="processInput()">Submit</button>
+    </div>
+    <div id="message"></div>
+    <div id="garageA" class="garage">
+        <h2>Garage A</h2>
+        <ul id="garageAList"></ul>
+    </div>
+    <div id="garageB" class="garage">
+        <h2>Garage B</h2>
+        <ul id="garageBList"></ul>
+    </div>
+    <div id="street" class="garage">
+        <h2>Street</h2>
+        <ul id="streetList"></ul>
+    </div>
+    <script>
+        // Define arrays for storing cars in each area
+let garageA = [];
+let garageB = [];
+let street = [];
+
+// Define maximum capacities
+const maxGarageSize = 10;
+const maxStreetSize = 8;
+
+// Function to process input from the form
+function processInput() {
+    const input = document.getElementById('carInput').value.trim();
+    if (input.length === 0) {
+        displayMessage('Please enter valid input.');
+        return;
+    }
+
+    const action = input.charAt(0).toLowerCase();
+    const licensePlate = input.slice(1).trim();
+
+    if (action === 'a') {
+        arriveCar(licensePlate);
+    } else if (action === 'd') {
+        departCar(licensePlate);
+    } else {
+        displayMessage('Invalid input. Use "a" for arrival and "d" for departure.');
+    }
+
+    document.getElementById('carInput').value = '';
+    updateDisplay();
+}
+
+// Function to handle car arrival
+function arriveCar(licensePlate) {
+    if (garageA.length < maxGarageSize) {
+        garageA.push(licensePlate);
+        displayMessage(Car ${licensePlate} parked in Garage A.);
+    } else if (garageB.length < maxGarageSize) {
+        garageB.push(licensePlate);
+        displayMessage(Car ${licensePlate} parked in Garage B.);
+    } else if (street.length < maxStreetSize) {
+        street.push(licensePlate);
+        displayMessage(Car ${licensePlate} parked on the street.);
+    } else {
+        displayMessage(No space available for car ${licensePlate}.);
+    }
+}
+
+// Function to handle car departure
+function departCar(licensePlate) {
+    if (removeCarFromArray(garageA, licensePlate)) {
+        rearrangeGarage(garageA);
+        displayMessage(Car ${licensePlate} left Garage A.);
+    } else if (removeCarFromArray(garageB, licensePlate)) {
+        rearrangeGarage(garageB);
+        displayMessage(Car ${licensePlate} left Garage B.);
+    } else if (removeCarFromArray(street, licensePlate)) {
+        displayMessage(Car ${licensePlate} left the street.);
+    } else {
+        displayMessage(Car ${licensePlate} not found.);
+    }
+}
+
+// Function to remove a car from an array
+function removeCarFromArray(array, licensePlate) {
+    const index = array.indexOf(licensePlate);
+    if (index !== -1) {
+        array.splice(index, 1);
+        return true;
+    }
+    return false;
+}
+
+// Function to rearrange garage arrays
+function rearrangeGarage(garage) {
+    if (street.length > 0) {
+        garage.push(street.shift());
+    }
+}
+
+// Function to update the display of lists
+function updateDisplay() {
+    updateList('garageAList', garageA);
+    updateList('garageBList', garageB);
+    updateList('streetList', street);
+}
+
+// Function to update a specific list
+function updateList(elementId, list) {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = '';
+    list.forEach(car => {
+        const li = document.createElement('li');
+        li.textContent = car;
+        ul.appendChild(li);
+    });
+}
+
+// Function to display a message
+function displayMessage(message) {
+    document.getElementById('message').textContent = message;
+}
+
+    </script>
+   
+</body>
+</html>

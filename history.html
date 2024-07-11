@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .no-bookings {
+            text-align: center;
+            color: #777;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking History</h1>
+        <div id="booking-history" class="no-bookings">No booking history available.</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingHistoryContainer = document.getElementById('booking-history');
+
+            // Simulate fetching booking history from the server
+            const mockData = [];  // Empty array to simulate zero bookings
+
+            if (mockData.length === 0) {
+                bookingHistoryContainer.innerHTML = 'No booking history available.';
+            } else {
+                bookingHistoryContainer.classList.remove('no-bookings');
+                mockData.forEach(booking => {
+                    const bookingElement = document.createElement('div');
+                    bookingElement.classList.add('booking');
+
+                    bookingElement.innerHTML = `
+                        <p><strong>Bus:</strong> ${booking.bus_id.bus_number} - ${booking.bus_id.route}</p>
+                        <p><strong>Date:</strong> ${new Date(booking.travel_date).toLocaleDateString()}</p>
+                        <p><strong>Seat:</strong> ${booking.seat_number}</p>
+                        <p><strong>Status:</strong> ${booking.status}</p>
+                    `;
+
+                    bookingHistoryContainer.appendChild(bookingElement);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+body {
+  background-image: url(https://img.freepik.com/free-vector/access-control-system-abstract-concept-vector-illustration-security-system-authorize-entry-login-credentials-electronic-access-password-passphrase-pin-verification-abstract-metaphor_335657-5746.jpg?w=996&t=st=1720679688~exp=1720680288~hmac=d8b3f4d9bf3f80569f057f293b978fcf4e32bf863de8baf61f123bee2d64d265);
+  background-size: 700px;
+  background-repeat: no-repeat;
+  background-position: right;
+  position: relative;
+  margin-right: 480px;
+  
+
+  
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px 20px;
+  margin: 20px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 20px;
+
+}
+.container{
+    max-width: 270px;
+            margin: 50px auto;
+            background-color: lightblue;
+            padding: 20px;
+            border-radius: 20px;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.contain{
+    background-color: green;
+    max-width: 270px;
+            margin: 50px auto;
+            background-color: lightblue;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.new{
+  text-decoration: none;
+  color: white;
+
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+
+

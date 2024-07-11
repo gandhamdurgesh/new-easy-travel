@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot Password</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  
+  .container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input[type=tel], input[type=text], input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button[type=submit] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type=submit]:hover {
+    background-color: #45a049;
+}
+</style>
+
+</head>
+<body>
+  <div class="container">
+    <!-- <h2>Forgot Password?</h2> -->
+    <button id="forgot-password-btn">Forgot Password</button>
+  </div>
+
+  <!-- Modal for phone number -->
+  <div id="phone-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Enter Phone Number</h2>
+      <form id="phone-form">
+        <input type="tel" id="phone-number" placeholder="Enter phone number" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for OTP -->
+  <div id="otp-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Enter OTP</h2>
+      <form id="otp-form">
+        <input type="text" id="otp" placeholder="Enter OTP" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for resetting password -->
+  <div id="reset-password-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Reset Password</h2>
+      <form id="reset-password-form">
+        <input type="password" id="new-password" placeholder="Enter new password" required>
+        <input type="password" id="confirm-password" placeholder="Confirm new password" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+    const phoneModal = document.getElementById('phone-modal');
+    const otpModal = document.getElementById('otp-modal');
+    const resetPasswordModal = document.getElementById('reset-password-modal');
+    const phoneForm = document.getElementById('phone-form');
+    const otpForm = document.getElementById('otp-form');
+    const resetPasswordForm = document.getElementById('reset-password-form');
+  
+    // Show phone number modal
+    forgotPasswordBtn.addEventListener('click', function() {
+      phoneModal.style.display = 'block';
+    });
+  
+    // Close modals
+    document.querySelectorAll('.close').forEach(function(closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        phoneModal.style.display = 'none';
+        otpModal.style.display = 'none';
+        resetPasswordModal.style.display = 'none';
+      });
+    });
+  
+    // Submit phone number form
+    phoneForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      otpModal.style.display = 'block';
+      phoneModal.style.display = 'none';
+    });
+  
+    // Submit OTP form
+    otpForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      resetPasswordModal.style.display = 'block';
+      otpModal.style.display = 'none';
+    });
+  
+    // Submit reset password form
+    resetPasswordForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      // Simulate successful password reset
+      alert('Password reset successful!');
+      // Redirect to home page (replace with actual redirect logic)
+      window.location.href = "./homepage2.html";
+    
+    });
+  });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            background-image: url(https://img.freepik.com/premium-photo/top-view-office-desk-with-office-tools-computer-laptop-wood-table-background-with-copy-space-generative-ai_3535-3556.jpg);
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            /* background-color: #f4f4f4; */
+            margin: 0;
+            padding: 0;
+            border: radius 20px;
+
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color:lightblue;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 550px;
+        }
+        .form-group{
+            height: 10px;
+            width: 100%;
+            position: relative;
+            bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <input type="text" name="firstName" placeholder="First name" required>
+            <input type="text" name="lastName" placeholder="Last name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone number" maxlength="10" required />
+           
+            <!-- <select name="gender" required> -->
+                <form id="gender">
+                    <div class="form-group">
+                        <label for="Gender"></label>
+                        <select id="Gender" name="gender" required>
+                            <option value="" disabled selected>Select your Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="others">Others</option> 
+                </select><br> 
+                    </div>
+
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="password" placeholder="confirm password" required>
+            <input type="submit" value="Register">
+            
+        </form>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit',function(event){
+        
+            event.preventDefault();
+       
+            const formData= new FormData(event.target);
+            const formObject={};
+            formData.forEach((value, key) => formObject[key] = value);
+                   const jsonData = JSON.stringify(formObject);
+       
+                   fetch('http://localhost:8080/customer/save', {
+                       method: 'POST',
+                       headers: {
+                           'Content-Type': 'application/json'
+                       },
+                       body: jsonData
+                   })
+                   .then(response => {
+                       if (!response.ok) {
+                           throw new Error('Network response was not ok ' + response.statusText);
+                       }
+                       return response.json();
+                   })
+                   .then(data => {
+                       console.log('Success:', data);
+                       console.log(data.firstName);
+                       if (data.firstName != undefined) {
+                           alert('Registration successful!');
+                           window.location.href = 'login.html';
+                       } else {
+                           alert("ERROR"); // Display error message
+                       }
+                   })
+                   .catch(error => {
+                       console.error('Error:', error);
+                       alert('Registration failed!');
+                   });
+              
+        });
+           
+       </script>
+       
+</body>
+</html>

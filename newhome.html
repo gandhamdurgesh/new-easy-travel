@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyTravel</title>
+    <link rel="stylesheet" href="./newhome.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div id="navbar">
+          
+        <div id="subnav1">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhUSEhAPEBUVFRUVFRUPFQ8QEBUVFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLi0BCgoKDg0OGxAQGyslHyUuLS0rLS0rKystLS0rLS8tLS0rLS0tLS0tKy0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAEBAQADAQEBAAAAAAAAAAAAAQIFBgcDBAj/xABGEAACAQMCAwQGBQcJCQAAAAABAgADBBESIQUGMRNBUWEHFCJxgZEyQmJyoVJTY4KisdEjM0NUkpOywcIVJDRzdJTS0/D/xAAZAQEAAwEBAAAAAAAAAAAAAAAAAQIDBAX/xAArEQEAAgEDAwEGBwAAAAAAAAAAAQIRAyExEkFRBBMUMmGR8CJCcYGxwdH/2gAMAwEAAhEDEQA/APXoiICCZMzIgUmZJlyJDA+k+cu8EQKk1iBEBERARI8yDANKDDSGAxJLneXrAIYKy4lgMREQEEyNJmBrMzrkJmhAsRmICIiAiIgIiICIiBkNHfDiQwHulOIzKogZM0FlxECESBZqICJMwxgWRmkyZM98CkmQTRGZiBTKNxLiWBAJYiAiTVBMCyFpMmTO8C5hTKwmYBhAzKBNCBFEsRAREQEREBERAREQMsZVEBZYDEREBEQTASExqmQYFYzOZoN5TOIH0M+Yl0wYGlliICIjMCFpZhoLY3Ow8TsBAmJrznBcQ5vsaJINdah/Jo5qn5jYfEzrV/6Seoo2/wCtXb/Qv/lM7atI5lpXStPZ6FjMmJ4/d878QqdKwpDwooq/icn8ZxFxxK4qfTr1n+87kfLMyn1Ne0NI9PPeXurXCL9J0X7zKP3z5i/ofnqP94n8Z4HiMCV96nwv7tHl/QaVFb6JDfdIP7pqfz7ScqcqWQ+KEqfmJ2HhHOt5QI1VPWE71rZY48n6g+/I8pavqY7wrb089pewZgGcZwTjFK6pCrSJx0ZT9JG71P8AHvnIsJ0RMTvDnmMbSAZmgJlTKzSUNRAiAiIgIiICBEQITJkyMJuBkNIJWEhEBiU48JCczQECHeaxEQIVgLLBgIkBnG8Y41b2y6q1QLn6Kj2qjfdX/PpImYjeUxEzw5PM4vivHLa2Ga1VVPcg9qofcg3+PSeecc58uKuVof7unTI3rEebdF+G/nOpMxJJJJJ3JJJJPiSes5r+piPhdFPTz+Z3ri3pGc5W2pBB+XW9pvgg2HxJnUeI8WuLg/y1apU8mPsD3IPZHyn4jE57alrcy6K6da8QYiCZ9aNu7/QR3+4rN+4Si75xP1jhlx/V7j+6q/wnyq2VZfpUqq/eR1/eIxKMw+MT93COD3FydNGmz+LdEX3sdh7us7vwr0boADc1mY/kUfZX3FyMn4AS9NO1uIVtqVry85zE9pteVrGmMC1pHzqDtT83zPpX5bsagw1rQ96qKbfBlwRNfdreWXvEeHRPRbXYXLoD7LUSxHmjLpP7TfOeoAzrvK3L1tQd69u71FqDSpbBAAOW0N9ZScYP2ep6zsmJ0aVZrXEufVtFrZhAJQJYmrMiIgIiICIiBjUZoHMsx0gaMimUyFYEJzNiAIgIiMwESMwG5OPfOKsro3X8ov8Aw/8AR/p/0n/L8B9br0xkOV1DGRvnwkyeszUcYJJAABJJ2AA3JJ8J5Zzlzg1wTRokrR6FhkNV9/gnl39/hM9TUikbr0pN5w5rmnnxUJpWmHbo1U7op+wPrHz6e+ed3Fd6jF3ZnZtyzElj8TPnE4b6k3nd3UpFY2IiboUmdgqqWZiAqruST0AlF2QJ3Tl3kCrVAqXJNBDuEGO2Yeedk+OT5Cdk5P5OS2Aq1gHr9R3pS8l8W+18vPmuY7atVtqtOgQtRlwCTp2JGoZ7iV1DPnOrT0MRm30ct9ffFfq6jdcZ4TYnRb2yXFRdiwwwB86r5P8AZyJyHFuZ65sad3ainjOmsrgu1M9NsEbBvLowM6la8hX7HDJSpDxd1PyCZM7ryzyr6rTq06lXtlrDDpp00+hBxuSTg4zt3eEmnXO2MQi/RHfMupWPOnFKr6KSpUY/VWln577DzM9E4O12aebrsQ5+rQ1YA+0SSCfd+M+PBdC+xRtWoUcfSZVpaj3ex9I9+7Y+M5Q7TXTpMbzOWV7RO0RgYgb9B1Ph5meL8X544jeVn9TqG3oJnSRoQsBkqXqMPpsASEHcDscEz2WuqsjBiApUhiTgAEYJz3T+b6dSnbmtbVNNzS1Y1UXA1NTyEZX6FDnJHXYb9QZ1JwnTiJy79yhz9cUq/q3EqilSG0130jTgEgllGKlNgPZYdcjqDtylDi9XjNdqNDtKNhTI7epulW48KQPVFbqR1x1xkCdF4Fy9X4rcZRTRoJhGqkZ0ouyrno9XGM4wO/AG09x4Pwqja0VoUU0Io95J72Y97HvMimZ/RN8Rxy/XTQKAqgKAAAAMAADAAHcJqImrEiJMwGYBmSJWECDeaCzKmVmgaiBEDKGUiAJYACBEQBgmMxAz1grJ0M/BzJxUWlrWuDg9mhKg9C59lB8WKj4wOucev/XbxeF0yeyQdpespxlBjFuD9rKhvIkeM7kg2AAAA2AGwA7gBPLPQpV11Lx3bVVbsmYnqdRqlj8WnqmmVrOYyveMTh596S+PEH1OmcbBqxHnutP5YJ948557OU5oLG8uNXXtnHwBwv4ATjJ5+pabWmXdp1itYhJYnKcs8Ga7rrSB0rgs7DqqDGceZJAHvlIiZnELTOIzL8FtbPUYJTRqjHoqAs3yE9T5J5WFqoq1QDXYeRFIH6oPj4n4Dz57hXCbe1TRRphPE9XbzZupnHc083Wtgo7ZmZ2GVpUgGqsB37kBR5kidunoxTeXJqas32hzxM/He8RWkQCHdm+ilJGqOce7ZR5sQPOdX5f9JFldVBSxVt3Y4Ttwmlz3AMpIB8jjM7rN854YTGOXzVsgHBGQDg4yPI42zNnecLxrmeytM9vcU0b8gHXVP6i5M6Dxr0ututnbgeFS53PwpqfxLfCRNohMUmXqVaqqKWdlRRuWchVA8ydhOj8welKzogpbg3b+K5SgP1yMt+qCPOeYVuNm7qFuI3F1URQWCUOzGWyMKqnCUxgk6sE7ec5rh3L9zxFVS1sKFlbBg3bVdb1G2Iyaze1V2J2UBZSdSZ4aRpxHLhOYea7y9OK1U6M7UqWUo+Xs/WP3sztPJnozq18VrwNQpbEUvo16g+1+bX9r3dZ3zlTkK0ssPjt6w/paoHsn9GnRPfufOdqiNPvYtqdqvjZ2lOki06SLTRRhVQBVA90+0TLzVi1BMypjHjAMYCzM0hgQQDKVlxAiiUCWICIiAMgMEzEDeqZ6yhZBtAETQ3lImFgVhOmelzUeG1MZwKlEt7u0H+emd1n5eJ2FOvRqUKgylRSrY2OD3g9xHUe6RMZhNZxOXg/KV3cWGjiFMLWolmpV0RssgJGFqjHsE4DK242xkZxPb+A8ftbxNdvVV/yl6VUPg6dQfw8J4hxXhd/weuSCQjZVaoUNQrJ+RUU5G/ejfDxnX6l23amqgFBiSQLfVSVM9yYOVHlmY1tNdm9qRbd7vzXyWl2/a03FKrgBsjKPgYGQNwcYGR5bTp9bkC/XotF/uVAP8QE47hHH+K6ENLi1lUJUHsrmrSFVSfqt2yDJ8wxkvPSTxai7UnNmWXGSqCou4DDDI+k7EdJW1KW3mE1m9dol+5OROIHrSpr96pT/ANJM7dyPyxXs3qPVaidaacUy7EEMD1IHn+E6XZ818duU7SnUtaaEkamNnSGQcHaq2ZwXHuYOKo2irxAvkZ/3WtSKjcjBajjB+MitKVnMZTNr22nD3q4uadMaqjpTHjUZUX5meE8xXlG44rWdqi1qZbTSKsGpnTSApKCAwK6+4+ySTnYkzhbL1apqe8r3ZYY0ikiVqjA9T2lV8LjbuPWLsW9YrTsrW5yM6i7+s1qmemadNAExv0znMva2Va06X6OPUgqU9aUaVfU2RbYVOzydLAINIOsMM6tW3TAWffivO/ErgaXuqiLgDTQxRBx4lfaOe/JxP18K9HHE62CaC26/lXDBP2BlvwndOEeiK3XBubipXP5FIdjT9xO7H3grIitp4TNqxy864fd2iKop2T3lww39ZJeiH+xQp4NQfePwnP8ADvR5xG8qGtXSlZq5ydSqh6DASgn0RjbB0z2DhPBLW1GmhQpUvEooDH3t1PxM5CXjT8s51fDqPL/o7sLXDGn6zUG+u4wwB65Wn9Ee/BPnO3RE0iIjhnMzPJI0MZCTJQgMryQdoA+MZlA2gLAHeXTLEBERAREZgTMSFYgRRKwk6SloBDDiEE1AiyxEBEhM/Pd3iUlL1HWmgxlnIVRk4G58ziB9bigjqUdFdWGGVwGQjwIOxnTOLejDh1UkotW2J/MN7H9hwQPhidhHM1j/AFu2/vE/jPtZ8atazaKVxRqPgnSjqzYHU4EpmsrRFoedXHodB/m74gfpKIb9zifA+hyp/X6f/bt/7Z60pgmPZ1T7Szyul6HF+vek/cogfvczkrX0S2K/TrXVTy1UkH7K5/GeiARHRXwe0t5dZseQOFUulnTqHxrl6/4OSPwnYra3p01000Smo6LTVUUfAbT6RLRGFZmZInyurqnSQvUdaaL1ZyFUZOBknzIn0VgQCDkHcEdCJKFk1T4217SqauzqI+hij6CG0sOqnHQz6kwKTJqMyTPpAwT3zXWYE2sDE2BtLEABERAREjGBYmVMYgUmZCyTSmBmJ9MSQKRJpliAiJljANJnMuDIsCES1aSOullV1PVXAZTjcbGaYSKYHS+cLCilewC0aShrlQwVEAYak2bA3HlM8Itq11VuHpVqdktGs9FVt6FDUQp3JcjO+2057mDgz3FS1dXVRQrCo2rOWAKnC47/AGe/xl5b4O9t6xqZW7a4equnOyt0Bz3zHo/H8m3X+H5vjxDmalTqtRSjdXNRMaxbUzU0ZGRqPjOvcU4velnq0l4tRGMhHtKTUlwu4LHfGxOfOc3W4Hd0q9WtaV6K9uVLpcIzDUoIBVl37ztJXs+L1FZGr2ChgVJRKxYAjBxnbMi3VPOf2TXpjjDjk49dpToX7HtLd003FJAP5Mhivap34JHTPl37dpvOLUKVA3LODS0hgy76s/RC+JPcJng/C0oW6W/84qqVbUNmzktlfAknacBacmaKwD1jUtKbGpRoMScO3c2dio7vHPvzMRevz/pWZpL8V3xu/pW5u6jil6xVRKNN1DLQpkMe0IxksQvQ+/HcPn/tSn38wPnyoKB8tM7RzNwf1yj2es0yrB0YDUAy5AyO8YJn5+EWF2r4uDY1KeD/ADdIrVLdxO2PHMia2zj7/laLVx9/46fxDjVSra3tBrlbtKa0WSsEFNjqqrkED/7aekWB/kqf3E/wicbzFwb1i2qUafZ02fTuRpX2WDb6RnunJ29PSqr10qoz7gBLUrMTupe0TGzrHIWM3v8A1dX987WDOrjgN5QqVXtLigErOajJcIxAZtzhl3n17HjP53h39ivFJmsYmJTaItOcvlxW8uat76nRrC2VaPbNUCLUqN7QXSNWw6j8Zbvg99Tpu68UqkorMA1KiVOkE4Pyn2vuBXJrJdUa9JK/YilUDozUX6Ele9RkfgPji4seL1FKNcWCKwKk00rFgCMHAbaVxO+YlOY2xMONTj91cCypU3Sg9ytVqlQIHI7LUPZVthnSfmJy/wDsK97uK1s92qjQK58xPg/KLItsbe47OrbBgrVEDo4fJfUudup8dj8Z+DinHL+3fs6lxaF9IYKltdvkHIG42zse+RvHx5TtPw4YHNF2bZVBpCu136p2unKj7YTpnf3eU5gcBve/itfPlRogfKcJwLlytXtMuWtqvrRuaRZM74G7IdwCc/ITm+x4x+e4cfMpXB+QiuZjNslsRtGGuVb+uz3NCvUFZreoqioFCFgwJ9pRtnadhM4Xl7g725q1KtUVqtdw7lV0IMA4Cj4mcxqm1M43ZXxnZA003SZjpLKnnBMqwFgGl0ygRAREQEREBMvNQRAAzDxpMoWBqTTLEBERARITM6jA3MMJoGMQKJlxCmGMCESkzQEQIBLEQEREBBaJDApMzrkJm4GGM11mZUgZmlmsRAgEsRAREjGBYnz1GWBuIiAiIgIiICImWMA0ZMmkwpgQifQSMJFMCdJowRKBAyVlAlEQEQIgImS0BoGozMnrIfKAgEQRBxAhlGZQspEDJE0sgWagIiICDBMzqgQNNN0mY6QKMRMxA+kREBERAREQEw8sQKpmXiIGxJpiIFiIgIiICZeIgVZGERAyZrVEQCiaAkiBYiICCZIgWZ1xECMZodIiBjE0sRAuiSIgf//Z" alt="" id="img1">
+            <a href="./aboutus.html"><big>EasyTravel</big></a>
+        </div>
+        <div id="subnav2">
+           <a href="./login.html"><big>User Login</big></a>
+        </div>
+         <!-- <div>
+            <a href="./signup.html">SignUp</a>
+         </div> -->
+    </div>
+
+<br>
+<!----------------------------------- navbar complted -------------------------------------------->
+<div class="Banner-card">
+    <img src="https://static.tnn.in/thumb/msid-102697146,thumbsize-1210156,width-1280,height-720,resizemode-75/102697146.jpg" alt="" id="img2">
+    <div class="Banner-text">
+    <h2>
+      <big>Find Your Perfect Journey with Easy Travel</big>
+    </h2>
+  </div>
+  </div>
+
+  <br>
+
+
+<!--------------------------------------- map Started ------------------------------------>
+
+
+
+<!---------------------------------------bus pic complted ----------------------------------------->
+<div class="controls">
+    <input id="from" type="text" placeholder="From Location">
+    <input id="to" type="text" placeholder="To Location">
+    <div id="subdiv3">
+        <div id="Raviicon3">
+            <i class="bi bi-calendar-check"></i>
+        </div>
+        
+            <input type="date">
+    </div>
+    <button onclick="calculateRoute()">Get Route</button>
+    
+
+</div>
+<div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        let map = L.map('map').setView([20.5937, 78.9629], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let control = L.Routing.control({
+            waypoints: [],
+            geocoder: L.Control.Geocoder.nominatim(),
+            routeWhileDragging: true
+        }).addTo(map);
+
+        function calculateRoute() {
+            let from = document.getElementById('from').value;
+            let to = document.getElementById('to').value;
+
+            L.Control.Geocoder.nominatim().geocode(from, function(fromResults) {
+                if (fromResults.length > 0) {
+                    let fromLatLng = fromResults[0].center;
+
+                    L.Control.Geocoder.nominatim().geocode(to, function(toResults) {
+                        if (toResults.length > 0) {
+                            let toLatLng = toResults[0].center;
+
+                            control.setWaypoints([
+                                L.latLng(fromLatLng),
+                                L.latLng(toLatLng)
+                            ]);
+                        } else {
+                            alert('Destination not found: ' + to);
+                        }
+                    });
+                } else {
+                    alert('Starting location not found: ' + from);
+                }
+            });
+        }
+    </script>
+
+
+<!-- <div  id="RaviMaindiv1">
+
+  <div id="subdiv1">
+    <div id="Raviicon1">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+    </div>
+      <div>
+        <input type="text" placeholder="Leaving From">
+      </div>
+  </div>
+
+  <div id="subdiv2">
+    <div id="Raviicon2">
+        <i class="bi bi-person-walking"></i>
+    </div>
+
+    <div>
+        <input type="text" placeholder="Going to">
+    </div>
+</div>
+
+
+
+<div id="subdiv4">
+    <div id="Raviicon4">
+        <i class="bi bi-person"></i>
+    </div>
+
+    <div>
+        <input type="number" placeholder="passengeer" class="input1">
+    </div>
+</div>
+
+<div id="subdiv5">
+    <div id="Raviicon5">
+         <i class="bi bi-search"></i> -->
+        <!-- <input type="button" placeholder="search" class="input1">
+    </div>
+
+</div>
+
+</div>
+<br><br> -->
+<br>
+<div id="RaviMaindiv2">
+    <div class="subcls">
+    <div id="Icon1">
+        <i class="bi bi-database"></i>
+    </div>
+    <div>
+        <p> <b>Your pick of rides at low prices</b></p>
+    </div>
+    <div>
+        <p>No matter where you’re going, by bus or carpool, find the perfect ride from 
+            our wide range of destinations and routes at low prices.</p> 
+    </div>
+    </div>
+    <div class="subcls">
+
+    <div id="Icon2">
+        <i class="bi bi-person-lines-fill"></i>
+    </div>
+
+    <div>
+        <p><b>Trust who you travel with</b></p>
+    </div>
+
+    <div>
+        <p>We take the time to get to know each of our members and bus partners. We check reviews, 
+            profiles and IDs, so you know who you’re travelling with and can book your ride at 
+            ease on our secure platform.</p>
+     </div>
+    </div>
+
+    <div class="subcls">
+    <div id="Icon3">
+        <i class="bi bi-lightning-charge"></i>
+    </div>
+
+    <div>
+        <p><b>Scroll, click, tap and go!</b></p>
+    </div>
+
+    <div>
+    <p>Booking a ride has never been easier! Thanks to our simple app powered
+         by great technology, you can book a ride close to you in just minutes.</p>
+    </div>
+
+    </div>
+
+</div>
+<br>
+
+<div id="RaviMaindiv4">
+
+    <div  id="Ravidiv5">
+        <img src="https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/modules/manage_the_sfdc_way_virtual_collaboration/msfw_virtual_collab_recognize_importance_impact/images/3deb17ff7e28a047bb95f9206ccfddff_ck-36-flx-10004-l-0-yaq-9-gi-941-pw.png" alt="" id="img3">
+    </div>
+    <div id="Ravidiv4">
+        <h1 style="text-align: center;">Help us keep you safe from scams</h1>
+        <p> At EasyTravel, we're working hard to make our platform as secure as it can
+            be. But when scams do happen, we want you to know exactly how to avoid and report them. Follow our tips
+            to help us keep you safe.</p>
+         <button id="button2"><a href="./aboutus.html">Learn more</a></button>
+    </div>
+
+</div>
+
+
+<div id="RaviMaindiv5">
+
+    <div id="divRavi1">
+        <h1 style="text-align: center;">Driving in your car soon?</h1>
+        <p>Drivers, great news: your good habits are being rewarded! Benefit from the Carpool Bonus by carpooling.
+            See eligibility conditions.</p>
+            <button id="button3"> <a>Offer a ride</a>
+    </div>
+    <div id="divRavi3">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSqqANnaMZwb9F6gxdbdFYGe0ushe23Il88A&s" alt="" id="img4">
+    </div>
+
+</div>   
+
+
+<div id="Ravimaindiv6">
+
+
+
+<div>
+  
+    <h3>EasyTravel roots</h3>
+   <p>Hyderabad → kurnool</p>
+   <p>kurnool → Bengaluru</p>
+   <p>Thirupathi→ Lucknow</p>
+   <p>Bengaluru → Chennai</p>
+   <p>Pune → Mumbai</p>
+   <p>Hyderabad → Vijayawada</p>
+   <p>Hyderabad → Rajahmundry</p>
+</div>
+
+<div>
+<h3>About</h3>
+<p><a href="./contactus.html">Contact Us</a></p>
+<p><a href="./aboutus.html">About Us</a></p>
+<p><a href="./ourservices.html">Our Services </a></p>
+<p><a href="./termsandcondition.html">Terms and Conditions</a></p>
+</div>
+
+<div id="divKumar1">
+    <!-- <h3>Social Media</h3> -->
+     
+   <p> <a href="https://www.facebook.com/login/"><i class="bi bi-facebook"></i></a></p>
+   <p><a href="https://www.instagram.com/accounts/login/?hl=en"><i class="bi bi-instagram"></i></a></p>
+   <p><a href="https://x.com/twitt_login?lang=en"><i class="bi bi-twitter"></i></a></p>
+   <p> <a href="https://www.youtube.com/account"><i class="bi bi-youtube"></i></a></p>
+
+</div>
+
+</div>
+
+
+
+</body>
+</html>
